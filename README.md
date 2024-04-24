@@ -19,6 +19,7 @@ Handling Outliers: To address outliers, particularly among highly correlated col
 
 ## Skewed Distribution Treatment: Recognizing right-skewed distributions among continuous variables, we further examined the distribution of highly skewed features. We noted that the 'number of shares' distribution exhibited heavy right skewness. 
 We applied the cubed root transformation to a dataset, particularly to variables with right-skewed distributions to make data more symmetrical and approximately normally distributed. Log transformation was not applied due to the presence of 0 values in the dataset. Data transformations will handle the outliers to some extent instead of dropping them.  This avoids the loss of data.
+
 ### kw_min_max_spread: This feature represents the spread between the minimum and maximum occurrences of keywords in the content. It indicates the range of keyword occurrences, which may reflect the diversity or focus of the content. 
 ### kw_avg_spread: Similar to kw_min_max_spread, this feature represents the spread between the average minimum and maximum keyword occurrences. It provides another perspective on the distribution of keyword occurrences in the content. 
 ### num_links_to_content_length: This feature represents the ratio of the number of links to other content (e.g., articles, websites) in the content to the content length. It reflects the richness of external references in the content. 
@@ -31,19 +32,20 @@ We applied the cubed root transformation to a dataset, particularly to variables
 # Support Vector Machine 
 
 
-Sampling: As SVM’s Dual optimization requires a lot of computational power we have used samples of the data. Converting class labels 0 to -1, and making sure there is no imbalance in data by sampling the +1 and -1 classes equally. Due to computational limitations, we have used only 6000 records from the original data with an 80:20 train-test split ratio.
-Class Initialization: The KernelSVM class is initialized with the training and testing data, as well as parameters like the kernel function, regularization parameter (C), and the maximum number of iterations.
+## Sampling: As SVM’s Dual optimization requires a lot of computational power we have used samples of the data. Converting class labels 0 to -1, and making sure there is no imbalance in data by sampling the +1 and -1 classes equally. Due to computational limitations, we have used only 6000 records from the original data with an 80:20 train-test split ratio.
+## Class Initialization: The KernelSVM class is initialized with the training and testing data, as well as parameters like the kernel function, regularization parameter (C), and the maximum number of iterations.
 The training and testing data are stored as instance variables, with the target variable 'popularity' separated from the feature variables.
-Kernel Function: The kernel_function method implements the kernel function used in the Kernel SVM. It supports linear, polynomial, and RBF (Radial Basis Function) kernels.
+
+## Kernel Function: The kernel_function method implements the kernel function used in the Kernel SVM. It supports linear, polynomial, and RBF (Radial Basis Function) kernels.
 The appropriate kernel function is selected based on the kernel parameter provided during class initialization.
-Kernel SVM Optimization: The fit method performs the Kernel SVM optimization using the Sequential Minimal Optimization (SMO) algorithm.It initializes the Lagrange multipliers (alpha) with random values between -C and C, and the bias term (b) to 0. The optimization process iterates until the maximum number of iterations is reached or the number of changed Lagrange multipliers is less than the number of training samples.
+## Kernel SVM Optimization: The fit method performs the Kernel SVM optimization using the Sequential Minimal Optimization (SMO) algorithm.It initializes the Lagrange multipliers (alpha) with random values between -C and C, and the bias term (b) to 0. The optimization process iterates until the maximum number of iterations is reached or the number of changed Lagrange multipliers is less than the number of training samples.
 During each iteration, the method updates the Lagrange multipliers and the bias term based on the SMO algorithm.
 The cost history is stored during the training process for visualization purposes.
-Cost Function Computation: The compute_cost method calculates the cost function for the Kernel SVM, which is the sum of the hinge loss and the regularization term.
-Prediction: The predict method uses the trained Kernel SVM model to predict the class labels for new input data.
+## Cost Function Computation: The compute_cost method calculates the cost function for the Kernel SVM, which is the sum of the hinge loss and the regularization term.
+## Prediction: The predict method uses the trained Kernel SVM model to predict the class labels for new input data.
 It computes the decision function based on the Lagrange multipliers, bias term, and the kernel function, and returns the sign of the decision function as the predicted class labels.
 Metric Calculation: The metric_calculation method computes the classification metrics (accuracy, precision, recall, F1-score) for the Kernel SVM model.
-Classification Report: The classification_report method is responsible for the overall evaluation of the Kernel SVM model. It calls the predict method to obtain the predictions on the training and testing data and then calculates the classification metrics using the metric_calculation method.
+## Classification Report: The classification_report method is responsible for the overall evaluation of the Kernel SVM model. It calls the predict method to obtain the predictions on the training and testing data and then calculates the classification metrics using the metric_calculation method.
 It also calls the plotting methods to visualize the cost function, decision boundary, and confusion matrix for both the training and testing data.
 
 
